@@ -1,0 +1,1 @@
+This is my personal repository of terminal configuration I wish to share across machines.
