@@ -135,6 +135,7 @@ alias commit="git commit -m"
 alias reset="git reset"
 alias newb="git checkout -b"
 alias up="git push -u origin HEAD"
+alias add="git add"
 
 rebaselast() { # param 1 is number of commits back
     git rebase --interactive HEAD~$1
