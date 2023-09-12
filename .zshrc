@@ -1,3 +1,5 @@
+export PATH="/opt/hsouromebrew/opt/sqlite/bin:$PATH"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -136,6 +138,8 @@ alias reset="git reset"
 alias newb="git checkout -b"
 alias up="git push -u origin HEAD"
 alias add="git add"
+alias branch="git --no-pager branch"
+alias composer="~/composer/composer"
 
 rebaselast() { # param 1 is number of commits back
     git rebase --interactive HEAD~$1
@@ -150,11 +154,15 @@ dclogs() { # param 1 is docker container name
 }
 
 dcbash() { # param 1 is docker container name
-    docker-compose exec -it $1 bash
+    docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml \
+      exec -e "TERM=xterm-256color" \
+      -it $1 bash
 }
 
 dcshell() { # param 1 is docker container name
-    docker-compose exec -it $1 sh
+    docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml \
+      exec -e "TERM=xterm-256color" \
+      -it $1 sh
 }
 
 rebuild () {
