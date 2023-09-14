@@ -140,6 +140,7 @@ alias newb="git checkout -b"
 alias up="git push -u origin HEAD"
 alias add="git add"
 alias branch="git --no-pager branch"
+alias merge="git merge"
 alias composer="~/composer/composer"
 
 rebaselast() { # param 1 is number of commits back
