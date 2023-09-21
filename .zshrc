@@ -146,6 +146,7 @@ alias branch="git --no-pager branch"
 alias merge="git merge"
 alias composer="~/composer/composer"
 alias renamebranch="git branch -M"
+alias stash="git stash"
 
 rebaselast() { # param 1 is number of commits back
     git rebase --interactive HEAD~$1
