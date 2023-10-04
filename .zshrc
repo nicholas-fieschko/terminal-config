@@ -127,7 +127,6 @@ alias dnetls="docker network ls"
 alias dneti="docker network inspect"
 alias services="/Users/nicholasfieschko/Code/local-dev-environment/start-services-only.sh"
 alias trans="docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml up -d && docker-compose logs -f titan-migration"
-alias adddf="git add -A && git diff --cached > ~/latest-diff.diff && code ~/latest-diff.diff"
 alias s="git status"
 alias addall="git add -A"
 alias ystart="yarn start"
@@ -147,13 +146,26 @@ alias merge="git merge"
 alias composer="~/composer/composer"
 alias renamebranch="git branch -M"
 alias stash="git stash"
+alias d="git --no-pager diff"
+
+dc() {
+  git --no-pager diff $1 --cached
+}
 
 df() {
   git diff $1 > ~/latest-diff.diff && code ~/latest-diff.diff
 }
 
 dfc() {
-  git diff --cached > ~/latest-diff.diff && code ~/latest-diff.diff
+  git diff $1 --cached > ~/latest-diff.diff && code ~/latest-diff.diff
+}
+
+addd() {
+  git add -A && git --no-pager diff $1 --cached
+}
+
+adddf() {
+  git add -A && git diff $1 --cached > ~/latest-diff.diff && code ~/latest-diff.diff
 }
 
 rebaselast() { # param 1 is number of commits back
