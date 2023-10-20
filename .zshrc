@@ -146,7 +146,9 @@ alias merge="git merge"
 alias composer="~/composer/composer"
 alias renamebranch="git branch -M"
 alias stash="git stash"
+alias clean="git clean -fd"
 alias d="git --no-pager diff"
+alias ytest="yarn && yarn test --watchAll"
 
 dc() {
   git --no-pager diff $1 --cached
@@ -170,6 +172,14 @@ adddf() {
 
 rebaselast() { # param 1 is number of commits back
     git rebase --interactive HEAD~$1
+}
+
+track() {
+  if [[ -n $1 ]]; then
+    git branch --set-upstream-to=origin/$1 $1
+  else
+    git branch --set-upstream-to=origin/$(git branch --show-current) $(git branch --show-current)
+  fi
 }
 
 logs() {
