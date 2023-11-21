@@ -147,11 +147,12 @@ alias composer="~/composer/composer"
 alias renamebranch="git branch -M"
 alias stash="git stash"
 alias clean="git clean -fd"
+alias revert="git revert"
 alias d="git --no-pager diff"
 alias ytest="yarn && yarn test --watchAll"
 
 dc() {
-  git --no-pager diff $1 --cached
+  git --no-pager diff --cached $1
 }
 
 df() {
@@ -159,15 +160,15 @@ df() {
 }
 
 dfc() {
-  git diff $1 --cached > ~/latest-diff.diff && code ~/latest-diff.diff
+  git diff --cached $1 > ~/latest-diff.diff && code ~/latest-diff.diff
 }
 
 addd() {
-  git add -A && git --no-pager diff $1 --cached
+  git add -A && git --no-pager diff --cached $1
 }
 
 adddf() {
-  git add -A && git diff $1 --cached > ~/latest-diff.diff && code ~/latest-diff.diff
+  git add -A && git diff --cached $1 > ~/latest-diff.diff && code ~/latest-diff.diff
 }
 
 rebaselast() { # param 1 is number of commits back
