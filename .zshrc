@@ -27,7 +27,7 @@ ZSH_THEME="robbyrussell"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -103,8 +103,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 alias deploy_dev="cd ~/Code/deployment && ansible-playbook deploy_dev.yml"
 alias deploy_prod="cd ~/Code/deployment && ansible-playbook deploy_prod.yml"
@@ -156,11 +156,11 @@ dc() {
 }
 
 df() {
-  git diff $1 > ~/latest-diff.diff && code ~/latest-diff.diff
+  git diff $1 >~/latest-diff.diff && code ~/latest-diff.diff
 }
 
 dfc() {
-  git diff --cached $1 > ~/latest-diff.diff && code ~/latest-diff.diff
+  git diff --cached $1 >~/latest-diff.diff && code ~/latest-diff.diff
 }
 
 addd() {
@@ -168,11 +168,11 @@ addd() {
 }
 
 adddf() {
-  git add -A && git diff --cached $1 > ~/latest-diff.diff && code ~/latest-diff.diff
+  git add -A && git diff --cached $1 >~/latest-diff.diff && code ~/latest-diff.diff
 }
 
 rebaselast() { # param 1 is number of commits back
-    git rebase --interactive HEAD~$1
+  git rebase --interactive HEAD~$1
 }
 
 track() {
@@ -184,44 +184,66 @@ track() {
 }
 
 logs() {
-    git log --oneline -10 "${@}" | cat
+  git log --oneline -10 "${@}" | cat
 }
 
 dclogs() { # param 1 is docker container name
-    docker-compose logs -f $1
+  docker-compose logs -f $1
 }
 
 dcbash() { # param 1 is docker container name
-    docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml \
-      exec -e "TERM=xterm-256color" \
-      -it $1 bash
+  docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml \
+    exec -e "TERM=xterm-256color" \
+    -it $1 bash
 }
 
 dcshell() { # param 1 is docker container name
-    docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml \
-      exec -e "TERM=xterm-256color" \
-      -it $1 sh
+  docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml \
+    exec -e "TERM=xterm-256color" \
+    -it $1 sh
 }
 
-rebuild () {
+rebuild() {
   NO_CACHE=0
   while getopts ":s" opt; do
     case $opt in
-      s)
-        NO_CACHE=1
-        ;;
+    s)
+      NO_CACHE=1
+      ;;
     esac
   done
   shift $OPTIND-1
 
-        docker-compose -f ~/Code/docker-compose.yml stop "${@}"
-        docker-compose -f ~/Code/docker-compose.yml rm -f "${@}"
+  docker-compose -f ~/Code/docker-compose.yml stop "${@}"
+  docker-compose -f ~/Code/docker-compose.yml rm -f "${@}"
+
   if [ "$NO_CACHE" -gt 0 ]; then
     dcb --no-cache "${@}"
   else
-          dcb "${@}"
+    dcb "${@}"
   fi
-        dcup -d --remove-orphans "${@}"
+  dcup -d --remove-orphans "${@}"
+}
+
+switch_php() {
+  if [ -z "$1" ]; then
+    echo "You need to provide the version to switch to"
+    return
+  fi
+  if [ "$1" = "8.2" ] || [ "$1" = "8" ]; then
+    VERSION="8.2"
+  elif [ "$1" = "7.4" ] || [ "$1" = "7" ]; then
+    VERSION="7.4"
+  else
+    echo "Invalid Version argument provided: $1"
+    echo "Defaulting to 8.2..."
+    VERSION="8.2"
+  fi
+  brew unlink php@8.2
+  brew unlink php@7.4
+  brew link "php@$VERSION"
+  sed -i "" "s|export PATH=\"\/usr\/local\/opt\/php\@.*\/|export PATH=\"\/usr\/local\/opt\/php\@$VERSION\/|g" "$HOME/.zshrc"
+  source "$HOME/.zshrc"
 }
 
 portKill() {
