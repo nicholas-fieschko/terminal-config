@@ -150,6 +150,7 @@ alias clean="git clean -fd"
 alias revert="git revert"
 alias d="git --no-pager diff"
 alias ytest="yarn && yarn test --watchAll"
+alias oldansible="docker run alpine/ansible:2.14.5 ansible"
 
 dc() {
   git --no-pager diff --cached $1
