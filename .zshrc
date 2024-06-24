@@ -1,3 +1,5 @@
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 export PATH="/opt/hsouromebrew/opt/sqlite/bin:$PATH"
 
 # If you come from bash you might have to change your $PATH.
@@ -111,7 +113,7 @@ alias deploy_prod="cd ~/Code/deployment && ansible-playbook deploy_prod.yml"
 alias dscorch="docker system prune -a --volumes"
 alias dcb="docker-compose -f ~/Code/local-dev-environment/docker-compose.yml -f ~/Code/local-dev-environment/transient-containers.yml build"
 alias dcup="docker-compose -f ~/Code/local-dev-environment/docker-compose.yml up --remove-orphans -d"
-alias dcupall="docker-compose -f ~/Code/local-dev-environment/docker-compose.yml -f ~/Code/local-dev-environment/transient-containers.yml up"
+alias dcupall="/Users/nicholasfieschko/Code/local-dev-environment/start-services-only.sh && docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml up -d && docker-compose logs -f titan-migration"
 alias dcupalltop="docker-compose -f ~/Code/local-dev-environment/docker-compose.yml -f ~/Code/local-dev-environment/transient-containers.yml up -d &>/dev/null &; ctop"
 alias dcdn="docker-compose -f ~/Code/local-dev-environment/docker-compose.yml down"
 alias dcdnall="docker-compose -f ~/Code/local-dev-environment/docker-compose.yml -f ~/Code/local-dev-environment/transient-containers.yml down"
@@ -150,7 +152,9 @@ alias clean="git clean -fd"
 alias revert="git revert"
 alias d="git --no-pager diff"
 alias ytest="yarn && yarn test --watchAll"
-alias oldansible="docker run alpine/ansible:2.14.5 ansible"
+alias phpunit="/Users/nicholasfieschko/.composer/vendor/bin/phpunit"
+alias phpunitwatch="/Users/nicholasfieschko/.composer/vendor/bin/phpunit-watcher"
+alias testwatch="/Users/nicholasfieschko/.composer/vendor/bin/phpunit-watcher watch"
 
 dc() {
   git --no-pager diff --cached $1
@@ -271,3 +275,26 @@ function upmerge() {
 # eval "$(pyenv init -)"
 # export PATH="$(pyenv root)/shims:$PATH"
 # source /Users/nick/.config/op/plugins.sh
+
+
+# Herd injected PHP 8.3 configuration.
+export HERD_PHP_83_INI_SCAN_DIR="/Users/nicholasfieschko/Library/Application Support/Herd/config/php/83/"
+
+
+# Herd injected PHP binary.
+export PATH="/Users/nicholasfieschko/Library/Application Support/Herd/bin/":$PATH
+
+
+# Herd injected PHP 7.4 configuration.
+export HERD_PHP_74_INI_SCAN_DIR="/Users/nicholasfieschko/Library/Application Support/Herd/config/php/74/"
+
+
+# Herd injected PHP 8.2 configuration.
+export HERD_PHP_82_INI_SCAN_DIR="/Users/nicholasfieschko/Library/Application Support/Herd/config/php/82/"
+
+
+# Herd injected PHP 8.1 configuration.
+export HERD_PHP_81_INI_SCAN_DIR="/Users/nicholasfieschko/Library/Application Support/Herd/config/php/81/"
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
