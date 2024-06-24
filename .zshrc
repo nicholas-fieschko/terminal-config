@@ -151,14 +151,13 @@ alias stash="git stash"
 alias clean="git clean -fd"
 alias revert="git revert"
 alias d="git --no-pager diff"
+alias dc="git --no-pager diff --cached"
 alias ytest="yarn && yarn test --watchAll"
 alias phpunit="/Users/nicholasfieschko/.composer/vendor/bin/phpunit"
 alias phpunitwatch="/Users/nicholasfieschko/.composer/vendor/bin/phpunit-watcher"
 alias testwatch="/Users/nicholasfieschko/.composer/vendor/bin/phpunit-watcher watch"
-
-dc() {
-  git --no-pager diff --cached $1
-}
+alias addd="git add -A && git --no-pager diff --cached"
+alias adddc="git add -A && git --no-pager diff --cached"
 
 df() {
   git diff $1 >~/latest-diff.diff && code ~/latest-diff.diff
@@ -166,10 +165,6 @@ df() {
 
 dfc() {
   git diff --cached $1 >~/latest-diff.diff && code ~/latest-diff.diff
-}
-
-addd() {
-  git add -A && git --no-pager diff --cached $1
 }
 
 adddf() {
@@ -276,22 +271,17 @@ function upmerge() {
 # export PATH="$(pyenv root)/shims:$PATH"
 # source /Users/nick/.config/op/plugins.sh
 
-
 # Herd injected PHP 8.3 configuration.
 export HERD_PHP_83_INI_SCAN_DIR="/Users/nicholasfieschko/Library/Application Support/Herd/config/php/83/"
-
 
 # Herd injected PHP binary.
 export PATH="/Users/nicholasfieschko/Library/Application Support/Herd/bin/":$PATH
 
-
 # Herd injected PHP 7.4 configuration.
 export HERD_PHP_74_INI_SCAN_DIR="/Users/nicholasfieschko/Library/Application Support/Herd/config/php/74/"
 
-
 # Herd injected PHP 8.2 configuration.
 export HERD_PHP_82_INI_SCAN_DIR="/Users/nicholasfieschko/Library/Application Support/Herd/config/php/82/"
-
 
 # Herd injected PHP 8.1 configuration.
 export HERD_PHP_81_INI_SCAN_DIR="/Users/nicholasfieschko/Library/Application Support/Herd/config/php/81/"
