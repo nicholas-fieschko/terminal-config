@@ -1,3 +1,5 @@
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 export PATH="/opt/hsouromebrew/opt/sqlite/bin:$PATH"
 
 # If you come from bash you might have to change your $PATH.
@@ -27,7 +29,7 @@ ZSH_THEME="robbyrussell"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -103,8 +105,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 alias deploy_dev="cd ~/Code/deployment && ansible-playbook deploy_dev.yml"
 alias deploy_prod="cd ~/Code/deployment && ansible-playbook deploy_prod.yml"
@@ -147,58 +149,61 @@ alias merge="git merge"
 alias composer="~/composer/composer"
 alias renamebranch="git branch -M"
 alias stash="git stash"
+alias sls="npx serverless"
+alias serverless="npx serverless"
+alias lambdatest="npx serverless invoke local -f"
 
 df() {
-  git diff $1 > ~/latest-diff.diff && code ~/latest-diff.diff
+  git diff $1 >~/latest-diff.diff && code ~/latest-diff.diff
 }
 
 dfc() {
-  git diff --cached > ~/latest-diff.diff && code ~/latest-diff.diff
+  git diff --cached >~/latest-diff.diff && code ~/latest-diff.diff
 }
 
 rebaselast() { # param 1 is number of commits back
-    git rebase --interactive HEAD~$1
+  git rebase --interactive HEAD~$1
 }
 
 logs() {
-    git log --oneline -10 "${@}" | cat
+  git log --oneline -10 "${@}" | cat
 }
 
 dclogs() { # param 1 is docker container name
-    docker-compose logs -f $1
+  docker-compose logs -f $1
 }
 
 dcbash() { # param 1 is docker container name
-    docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml \
-      exec -e "TERM=xterm-256color" \
-      -it $1 bash
+  docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml \
+    exec -e "TERM=xterm-256color" \
+    -it $1 bash
 }
 
 dcshell() { # param 1 is docker container name
-    docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml \
-      exec -e "TERM=xterm-256color" \
-      -it $1 sh
+  docker-compose -f /Users/nicholasfieschko/Code/local-dev-environment/transient-containers.yml \
+    exec -e "TERM=xterm-256color" \
+    -it $1 sh
 }
 
-rebuild () {
+rebuild() {
   NO_CACHE=0
   while getopts ":s" opt; do
     case $opt in
-      s)
-        NO_CACHE=1
-        ;;
+    s)
+      NO_CACHE=1
+      ;;
     esac
   done
   shift $OPTIND-1
 
-        docker-compose -f ~/Code/docker-compose.yml stop "${@}"
-        docker-compose -f ~/Code/docker-compose.yml rm -f "${@}"
+  docker-compose -f ~/Code/docker-compose.yml stop "${@}"
+  docker-compose -f ~/Code/docker-compose.yml rm -f "${@}"
   if [ "$NO_CACHE" -gt 0 ]; then
     dcb --no-cache "${@}"
   else
-          dcb "${@}"
+    dcb "${@}"
   fi
-        dcup -d --remove-orphans "${@}"
+  dcup -d --remove-orphans "${@}"
 }
 
 portKill() {
@@ -225,3 +230,20 @@ function upmerge() {
 # eval "$(pyenv init -)"
 # export PATH="$(pyenv root)/shims:$PATH"
 # source /Users/nick/.config/op/plugins.sh
+
+# pnpm
+export PNPM_HOME="/Users/nick/Library/pnpm"
+case ":$PATH:" in
+*":$PNPM_HOME:"*) ;;
+*) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+eval $(thefuck --alias)
+eval "$(gh copilot alias -- zsh)"
+
+eval "$(rbenv init - zsh)"
+FPATH=~/.rbenv/completions:"$FPATH"
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
