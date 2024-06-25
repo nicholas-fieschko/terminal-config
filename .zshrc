@@ -158,6 +158,9 @@ alias phpunitwatch="/Users/nicholasfieschko/.composer/vendor/bin/phpunit-watcher
 alias testwatch="/Users/nicholasfieschko/.composer/vendor/bin/phpunit-watcher watch"
 alias addd="git add -A && git --no-pager diff --cached"
 alias adddc="git add -A && git --no-pager diff --cached"
+alias sls="npx serverless"
+alias serverless="npx serverless"
+alias lambdatest="npx serverless invoke local -f"
 
 df() {
   git diff $1 >~/latest-diff.diff && code ~/latest-diff.diff
@@ -216,7 +219,6 @@ rebuild() {
 
   docker-compose -f ~/Code/docker-compose.yml stop "${@}"
   docker-compose -f ~/Code/docker-compose.yml rm -f "${@}"
-
   if [ "$NO_CACHE" -gt 0 ]; then
     dcb --no-cache "${@}"
   else
@@ -285,6 +287,19 @@ export HERD_PHP_82_INI_SCAN_DIR="/Users/nicholasfieschko/Library/Application Sup
 
 # Herd injected PHP 8.1 configuration.
 export HERD_PHP_81_INI_SCAN_DIR="/Users/nicholasfieschko/Library/Application Support/Herd/config/php/81/"
+# pnpm
+export PNPM_HOME="/Users/nick/Library/pnpm"
+case ":$PATH:" in
+*":$PNPM_HOME:"*) ;;
+*) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+eval $(thefuck --alias)
+eval "$(gh copilot alias -- zsh)"
+
+eval "$(rbenv init - zsh)"
+FPATH=~/.rbenv/completions:"$FPATH"
 
 # Amazon Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
